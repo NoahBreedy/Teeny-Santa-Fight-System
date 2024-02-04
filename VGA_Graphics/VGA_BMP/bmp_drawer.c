@@ -86,7 +86,7 @@ int main() {
     setTextSize(1) ;
     writeString("Raspberry Pi Pico") ;
     setCursor(65, 10) ;
-    writeString("Graphics primitives demo") ;
+    writeString("BMP Image Drawer") ;
     setCursor(65, 20) ;
     writeString("Noah Breedy") ;
     setCursor(65, 30) ;
@@ -98,7 +98,7 @@ int main() {
     drawIMG(vga_data,0, 0);
 
 
-    while(1) {
+    while(true) {
         // Timing text
         if (time_accum != time_accum_old) {
             time_accum_old = time_accum ;
