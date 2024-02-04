@@ -99,16 +99,6 @@ int main() {
 
 
     while(true) {
-        // Timing text
-        if (time_accum != time_accum_old) {
-            time_accum_old = time_accum ;
-            fillRect(250, 20, 176, 30, RED); // red box
-            sprintf(timetext, "%d", time_accum) ;
-            setCursor(250, 20) ;
-            setTextSize(2) ;
-            writeString(timetext) ;
-        }
-
         // A brief nap
         sleep_ms(10) ;
 
