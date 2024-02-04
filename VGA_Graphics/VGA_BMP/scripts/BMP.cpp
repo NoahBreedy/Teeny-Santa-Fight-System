@@ -68,7 +68,7 @@ int main(int argc, char *argv[]){
     }
 
     std::vector<enum colors> bmp_pixels;
-    for(int i = 0; i < (width*height)*3; i+=3){
+    for(int i = 0; i < (width*height)*4; i+=4){
         uint8_t r = image_data[i];
         uint8_t g = image_data[i+1];
         uint8_t b = image_data[i+2];
