@@ -81,7 +81,8 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "Error opening file.\n");
         return 1;  
     }
-
+    fprintf(out_file, "%d\n", width);
+    fprintf(out_file, "%d\n", height);
     for (int i = 0; i < bmp_pixels.size(); i++) {
         fprintf(out_file, "%d\n", bmp_pixels[i]);
     }
