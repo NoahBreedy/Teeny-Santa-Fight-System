@@ -38,17 +38,30 @@ bool repeating_timer_callback(struct repeating_timer *t) {
     return true;
 }
 
+void drawIMG(FILE* file,int start_x, int start_y){
+    int width,height;
+    int color;
+    fscanf (file, "%d", &width);
+    fscanf (file, "%d", &height);
+    for(int y =start_y; y < start_y+height; y++){
+        for(int x = start_x; x < start_x+width; x++){
+            fscanf (file, "%d", &color);
+            drawPixel(x,y,color);
+        }
+    }
+    fscanf (file, "%d", &color);
+}
 
 int main() {
 
-    // Initialize stdio
+
+    FILE *vga_data = fopen("santa.vga","r");
+
+    //Initialize stdio
     stdio_init_all();
 
     // Initialize the VGA screen
     initVGA() ;
-
-    // circle radii
-    short circle_x = 0 ;
 
     // color chooser
     char color_index = 0 ;
@@ -73,68 +86,23 @@ int main() {
     setTextSize(1) ;
     writeString("Raspberry Pi Pico") ;
     setCursor(65, 10) ;
-    writeString("Graphics primitives demo") ;
+    writeString("BMP Image Drawer") ;
     setCursor(65, 20) ;
-    writeString("Hunter Adams") ;
+    writeString("Noah Breedy") ;
     setCursor(65, 30) ;
-    writeString("vha3@cornell.edu") ;
-    setCursor(65, 40) ;
-    writeString("4-bit mod by Bruce Land") ;
-    setCursor(250, 0) ;
-    setTextSize(2) ;
-    writeString("Time Elapsed:") ;
-
+    writeString("teenyAT@sunypoly.edu") ;
+   
     // Setup a 1Hz timer
     struct repeating_timer timer;
     add_repeating_timer_ms(-1000, repeating_timer_callback, NULL, &timer);
+    drawIMG(vga_data,0, 0);
+
 
     while(true) {
-
-        // Modify the color chooser
-        if (color_index ++ == 15) color_index = 0 ;
-
-        // A row of filled circles
-        fillCircle(disc_x, 100, 20, color_index);
-        disc_x += 35 ;
-        if (disc_x > 640) disc_x = 0;
-        
-        // Concentric empty circles
-        drawCircle(320, 200, circle_x, color_index);
-        circle_x += 1 ;        
-        if (circle_x > 130) circle_x = 0;
-
-        // A series of rectangles
-        drawRect(10, 300, box_x, box_x, color_index);
-        box_x += 5 ;
-        if (box_x > 195) box_x = 10;
-
-        // Random lines
-        drawLine(210+(rand()&0x7f), 350+(rand()&0x7f), 210+(rand()&0x7f), 
-                 350+(rand()&0x7f), color_index);
-
-        // Vertical lines
-        drawVLine(Vline_x, 300, (Vline_x>>2), color_index);
-        Vline_x += 2 ;
-        if (Vline_x > 620) Vline_x = 350;
-        
-        // Horizontal lines
-        drawHLine(400, Hline_y, 150, color_index);
-        Hline_y += 2 ;
-        if (Hline_y > 400) Hline_y = 240;
-
-        // Timing text
-        if (time_accum != time_accum_old) {
-            time_accum_old = time_accum ;
-            fillRect(250, 20, 176, 30, RED); // red box
-            sprintf(timetext, "%d", time_accum) ;
-            setCursor(250, 20) ;
-            setTextSize(2) ;
-            writeString(timetext) ;
-        }
-
         // A brief nap
         sleep_ms(10) ;
 
    }
-
+    fclose(vga_data);
+    return 0;
 }
